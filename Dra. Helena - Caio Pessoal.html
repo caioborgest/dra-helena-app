@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="theme-color" content="#208080">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dra. Helena">
+    <meta name="description" content="Psicoterapia particular com Dra. Helena Monteiro para Caio Diniz Borges">
+    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Dra.%20Helena%20-%20Caio%22,%22short_name%22:%22Dra.%20Helena%22,%22start_url%22:%22/%22,%22display%22:%22standalone%22,%22background_color%22:%22%23ffffff%22,%22theme_color%22:%22%23208080%22,%22orientation%22:%22portrait-primary%22,%22icons%22:[{%22src%22:%22data:image/svg%2bxml,%253Csvg%20xmlns%3D%27http://www.w3.org/2000/svg%27%20viewBox%3D%270%200%20192%20192%27%253E%253Crect%20fill%3D%27%23208080%27%20width%3D%27192%27%20height%3D%27192%27/%253E%253Ctext%20x%3D%2796%27%20y%3D%27110%27%20font-size%3D%27120%27%20text-anchor%3D%27middle%27%20fill%3D%27white%27%253E💚%253C/text%253E%253C/svg%253E%22,%22sizes%22:%22192x192%22,%22type%22:%22image/svg+xml%22}]}">
+    <title>Dra. Helena - Psicoterapia Pessoal de Caio</title>
+    <style>
+        :root {
+            --color-primary: #208080;
+            --color-primary-hover: #1a6b6b;
+            --color-primary-light: #e6f5f5;
+            --color-bg: #f8f9fa;
+            --color-surface: #ffffff;
+            --color-border: #e0e0e0;
+            --color-text: #2c3e50;
+            --color-text-light: #7f8c8d;
+            --color-success: #27ae60;
+            --color-warning: #f39c12;
+            --color-error: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        input, textarea, select {
+            font-size: 16px;
+            -webkit-user-select: text;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .header.show {
+            display: block;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-btn:active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .nav-btn.active {
+            background: rgba(255,255,255,0.4);
+            border-bottom: 3px solid white;
+        }
+
+        .container {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            gap: 0;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--color-surface);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            max-height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: none;
+            flex-shrink: 0;
+            border-right: 1px solid var(--color-border);
+        }
+
+        .sidebar.show {
+            display: block;
+        }
+
+        .sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .consultation-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: var(--color-primary-light);
+            border-left: 4px solid var(--color-primary);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .consultation-item:active {
+            background: rgba(32, 128, 128, 0.2);
+            transform: translateX(4px);
+        }
+
+        .consultation-item.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .consultation-date {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .consultation-status {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .section {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .section.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel {
+            background: var(--color-surface);
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ONBOARDING STYLES */
+        .onboarding-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+        }
+
+        .onboarding-content {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .onboarding-logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .onboarding-title {
+            font-size: 28px;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .onboarding-subtitle {
+            font-size: 16px;
+            color: var(--color-text-light);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-border);
+            transition: all 0.3s ease;
+        }
+
+        .step-dot.active {
+            background: var(--color-primary);
+            width: 24px;
+            border-radius: 5px;
+        }
+
+        .onboarding-form {
+            background: var(--color-surface);
+            border-radius: 8px;
+            padding: 30px 20px;
+            width: 100%;
+        }
+
+        .onboarding-step {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--color-text);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(32, 128, 128, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:active {
+            background: var(--color-primary-hover);
+            transform: translateY(2px);
+        }
+
+        .btn-secondary {
+            background: var(--color-border);
+            color: var(--color-text);
+            flex: 1;
+        }
+
+        .btn-secondary:active {
+            background: #d0d0d0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* CHAT STYLES */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 15px;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            flex-shrink: 0;
+        }
+
+        .chat-header h2 {
+            color: var(--color-primary);
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .chat-info {
+            font-size: 12px;
+            color: var(--color-text-light);
+        }
+
+        .chat-messages {
+            flex: 1;
+            background: var(--color-bg);
+            padding: 15px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .message.patient {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.therapist .message-bubble {
+            background: #e8f4f8;
+            color: var(--color-text);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.patient .message-bubble {
+            background: var(--color-primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: var(--color-text-light);
+            margin-top: 4px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            flex-shrink: 0;
+            align-items: flex-end;
+        }
+
+        .chat-input-area textarea {
+            flex: 1;
+            resize: none;
+            max-height: 100px;
+            padding: 10px;
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+        }
+
+        .chat-input-area textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* MOOD TRACKER */
+        .mood-selector {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mood-btn {
+            padding: 12px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            background: var(--color-surface);
+            cursor: pointer;
+            font-size: 28px;
+            transition: all 0.2s ease;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mood-btn:active {
+            transform: scale(0.95);
+            border-color: var(--color-primary);
+        }
+
+        .mood-btn.selected {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+        }
+
+        /* CARDS */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .progress-card {
+            background: var(--color-primary-light);
+            border-left: 4px solid var(--color-primary);
+            padding: 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-card:active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(32, 128, 128, 0.15);
+        }
+
+        .progress-label {
+            font-size: 11px;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .progress-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+
+        .progress-subtitle {
+            font-size: 11px;
+            color: var(--color-text-light);
+            margin-top: 6px;
+        }
+
+        .goal-card {
+            background: #e8f4f8;
+            border-left: 4px solid var(--color-primary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .goal-title {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .goal-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(32, 128, 128, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .goal-progress-bar {
+            height: 100%;
+            background: var(--color-primary);
+            transition: width 0.3s ease;
+        }
+
+        .journal-entry {
+            background: var(--color-primary-light);
+            border-left: 4px solid var(--color-primary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .journal-date {
+            font-size: 11px;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .journal-preview {
+            font-size: 13px;
+            color: var(--color-text);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-info {
+            background: rgba(32, 128, 128, 0.1);
+            border-left: 4px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .chart-container {
+            background: var(--color-surface);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .chart-container h3 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .line-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            gap: 5px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chart-bar:active {
+            opacity: 0.8;
+        }
+
+        .chart-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--color-text-light);
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--color-primary) 0%, rgba(32,128,128,0.2) 100%);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 12px;
+            height: 12px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding: 12px;
+            background: var(--color-bg);
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease;
+            z-index: 3000;
+            max-width: 300px;
+        }
+
+        .notification.success {
+            background: var(--color-success);
+        }
+
+        .home-card {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(32,128,128,0.05) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--color-primary);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(32, 128, 128, 0.25);
+            border: 3px solid white;
+            overflow: hidden;
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .avatar-circle img:not([src]) {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+        }
+
+        .avatar-text {
+            font-size: 36px;
+            color: white;
+        }
+
+        .card-info h3 {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-info p {
+            font-size: 13px;
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .badge {
+            font-size: 11px;
+            background: var(--color-primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .nav-tabs {
+                gap: 4px;
+            }
+
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 150px;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .mood-selector {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .mood-btn {
+                font-size: 24px;
+                min-height: 50px;
+            }
+
+            .progress-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .message-bubble {
+                max-width: 85%;
+                font-size: 13px;
+            }
+
+            .home-card {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .onboarding-logo {
+                font-size: 60px;
+                margin-bottom: 15px;
+            }
+
+            .onboarding-title {
+                font-size: 22px;
+            }
+
+            .onboarding-subtitle {
+                font-size: 14px;
+            }
+
+            .onboarding-form {
+                padding: 20px 15px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                font-size: 16px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                margin-top: 15px;
+            }
+
+            .btn-secondary {
+                width: 100%;
+            }
+
+            .chat-input-area {
+                padding: 12px;
+            }
+
+            .panel {
+                padding: 15px;
+            }
+
+            .chart-container {
+                padding: 15px;
+            }
+
+            .line-chart {
+                height: 120px;
+            }
+
+            .timeline-item {
+                gap: 15px;
+            }
+
+            .timeline-content {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .header h1 {
+                font-size: 16px;
+                width: 100%;
+            }
+
+            .nav-tabs {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                justify-content: flex-start;
+                scroll-behavior: smooth;
+            }
+
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 11px;
+                min-width: fit-content;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .container {
+                gap: 0;
+            }
+
+            .sidebar {
+                max-height: 120px;
+                padding: 12px;
+            }
+
+            .sidebar h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .consultation-item {
+                padding: 10px;
+                margin-bottom: 8px;
+            }
+
+            .consultation-date {
+                font-size: 11px;
+            }
+
+            .consultation-status {
+                font-size: 10px;
+            }
+
+            .main-content {
+                flex: 1;
+            }
+
+            .panel {
+                padding: 12px;
+            }
+
+            .chat-header {
+                padding: 12px;
+            }
+
+            .chat-header h2 {
+                font-size: 16px;
+                margin-bottom: 2px;
+            }
+
+            .chat-info {
+                font-size: 11px;
+            }
+
+            .chat-messages {
+                padding: 12px;
+            }
+
+            .message {
+                margin-bottom: 10px;
+                gap: 6px;
+            }
+
+            .message-bubble {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .chat-input-area {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .chat-input-area textarea {
+                padding: 8px;
+                max-height: 80px;
+                font-size: 14px;
+            }
+
+            .btn {
+                min-height: 40px;
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 10px;
+                font-size: 16px;
+            }
+
+            .form-group textarea {
+                min-height: 80px;
+            }
+
+            .progress-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .progress-card {
+                padding: 12px;
+            }
+
+            .progress-label {
+                font-size: 10px;
+            }
+
+            .progress-value {
+                font-size: 20px;
+            }
+
+            .mood-selector {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .mood-btn {
+                font-size: 22px;
+                min-height: 50px;
+                padding: 8px;
+            }
+
+            .goal-card {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .journal-entry {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .goal-title {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+
+            .journal-date {
+                font-size: 10px;
+            }
+
+            .journal-preview {
+                font-size: 12px;
+            }
+
+            .avatar-circle {
+                width: 70px;
+                height: 70px;
+            }
+
+            .avatar-text {
+                font-size: 32px;
+            }
+
+            .card-info h3 {
+                font-size: 15px;
+            }
+
+            .card-info p {
+                font-size: 12px;
+            }
+
+            .chart-container {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .chart-container h3 {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+
+            .line-chart {
+                height: 100px;
+                gap: 4px;
+            }
+
+            .chart-bar-label {
+                font-size: 9px;
+                bottom: -20px;
+            }
+
+            .timeline {
+                padding: 15px 0;
+            }
+
+            .timeline-item {
+                gap: 12px;
+                margin-bottom: 15px;
+            }
+
+            .timeline-content {
+                font-size: 12px;
+                padding: 10px;
+            }
+
+            .onboarding-logo {
+                font-size: 50px;
+            }
+
+            .onboarding-title {
+                font-size: 20px;
+            }
+
+            .onboarding-subtitle {
+                font-size: 13px;
+            }
+
+            .onboarding-form {
+                padding: 15px 12px;
+            }
+
+            .step-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .step-dot.active {
+                width: 20px;
+            }
+
+            .step-indicator {
+                gap: 6px;
+                margin-bottom: 25px;
+            }
+
+            .notification {
+                bottom: 15px;
+                right: 15px;
+                font-size: 13px;
+                max-width: 90%;
+                left: 15px;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        @supports (padding: max(0px)) {
+            body {
+                padding-top: max(0px, env(safe-area-inset-top));
+                padding-left: max(0px, env(safe-area-inset-left));
+                padding-right: max(0px, env(safe-area-inset-right));
+                padding-bottom: max(0px, env(safe-area-inset-bottom));
+            }
+
+            .chat-input-area {
+                padding-bottom: max(15px, env(safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ONBOARDING SCREEN -->
+    <div id="onboardingScreen" class="section active">
+        <div class="onboarding-container">
+            <div class="onboarding-content">
+                <div class="onboarding-logo">💚</div>
+                <h1 class="onboarding-title">Bem-vindo, Caio!</h1>
+                <p class="onboarding-subtitle">Vamos conhecer como funciona sua terapia com a Dra. Helena</p>
+
+                <form class="onboarding-form" onsubmit="completeOnboarding(event)">
+                    <div class="step-indicator">
+                        <div class="step-dot active" id="step0"></div>
+                        <div class="step-dot" id="step1"></div>
+                        <div class="step-dot" id="step2"></div>
+                        <div class="step-dot" id="step3"></div>
+                    </div>
+
+                    <!-- STEP 0: WELCOME -->
+                    <div id="onboardingStep0" class="onboarding-step">
+                        <h2 style="color: var(--color-primary); margin-bottom: 20px;">👋 Bem-vindo, Caio!</h2>
+                        
+                        <div style="background: linear-gradient(135deg, #e8b4d4 0%, #f5d5e3 100%); padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                            <div style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 15px; overflow: hidden; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/97922838-1a89-4214-9750-224da718c065.png" alt="Dra. Helena" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h3 style="color: #c65911; margin-bottom: 8px;">Dra. Helena Monteiro</h3>
+                            <p style="font-size: 12px; color: #d68910;">Psicóloga Especialista</p>
+                        </div>
+
+                        <p style="font-size: 14px; color: var(--color-text); margin-bottom: 15px; line-height: 1.6;">
+                            Olá! Sou a <strong>Dra. Helena Monteiro</strong>, sua psicóloga especialista em:
+                        </p>
+                        <ul style="text-align: left; margin-bottom: 20px; color: var(--color-text); font-size: 14px; padding-left: 20px;">
+                            <li>✓ Terapia Cognitivo-Comportamental (TCC)</li>
+                            <li>✓ Teoria do Apego</li>
+                            <li>✓ Terapia do Esquema</li>
+                        </ul>
+                        <p style="font-size: 13px; color: var(--color-text-light); margin-bottom: 20px;">
+                            Estou aqui para ajudá-lo com ansiedade profissional, síndrome do impostor, burnout e perfeccionismo. Vamos começar essa jornada de transformação? 💚
+                        </p>
+                        <button type="button" class="btn btn-primary" onclick="nextOnboardingStep()">Próximo</button>
+                    </div>
+
+                    <!-- STEP 1: APP TOUR -->
+                    <div id="onboardingStep1" class="onboarding-step" style="display: none;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 15px;">📱 Como Funciona Este App</h2>
+                        <p style="font-size: 13px; color: var(--color-text-light); margin-bottom: 20px;">Aqui estão as principais funcionalidades:</p>
+                        
+                        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--color-primary); display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">💬</span>
+                            <div>
+                                <strong style="color: var(--color-primary);">Sessões Terapêuticas</strong>
+                                <p style="font-size: 12px; color: var(--color-text); margin-top: 4px;">Converse comigo sempre que precisar. Ofereço respostas compassivas usando TCC e técnicas de terapia.</p>
+                            </div>
+                        </div>
+
+                        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--color-primary); display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">😊</span>
+                            <div>
+                                <strong style="color: var(--color-primary);">Rastreamento de Humor</strong>
+                                <p style="font-size: 12px; color: var(--color-text); margin-top: 4px;">Registre seu bem-estar diário e veja padrões emocionais ao longo do tempo.</p>
+                            </div>
+                        </div>
+
+                        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid var(--color-primary); display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">🎯</span>
+                            <div>
+                                <strong style="color: var(--color-primary);">Metas Terapêuticas</strong>
+                                <p style="font-size: 12px; color: var(--color-text); margin-top: 4px;">Defina objetivos específicos e acompanhe o progresso com prazos realistas.</p>
+                            </div>
+                        </div>
+
+                        <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--color-primary); display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">📔</span>
+                            <div>
+                                <strong style="color: var(--color-primary);">Diário Pessoal</strong>
+                                <p style="font-size: 12px; color: var(--color-text); margin-top: 4px;">Registre pensamentos, reflexões e sentimentos. A escrita promove autoconhecimento.</p>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevOnboardingStep()">Voltar</button>
+                            <button type="button" class="btn btn-primary" onclick="nextOnboardingStep()">Próximo</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: FOCUS AREAS -->
+                    <div id="onboardingStep2" class="onboarding-step" style="display: none;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 15px;">🎯 Nossas Áreas de Trabalho</h2>
+                        <p style="font-size: 13px; color: var(--color-text-light); margin-bottom: 20px;">
+                            Como profissional de Growth & Marketing, vamos focar nestes pontos específicos:
+                        </p>
+                        
+                        <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #f39c12; display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">⚡</span>
+                            <div>
+                                <strong style="color: #d68910;">Ansiedade Profissional</strong>
+                                <p style="font-size: 12px; color: #8b6914; margin-top: 4px;">Estratégias para lidar com pressão, deadlines apertados e expectativas de performance contínua.</p>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #e74c3c; display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">🎭</span>
+                            <div>
+                                <strong style="color: #c0392b;">Síndrome do Impostor</strong>
+                                <p style="font-size: 12px; color: #a93226; margin-top: 4px;">Reconhecer suas conquistas reais, validar sua competência e superar sentimentos de inadequação.</p>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #17a2b8; display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">🔥</span>
+                            <div>
+                                <strong style="color: #138496;">Burnout e Exaustão</strong>
+                                <p style="font-size: 12px; color: #0c5460; margin-top: 4px;">Recuperar energia, estabelecer limites saudáveis e equilibrar carreira com bem-estar pessoal.</p>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #28a745; display: flex; gap: 12px;">
+                            <span style="font-size: 24px; flex-shrink: 0;">✨</span>
+                            <div>
+                                <strong style="color: #1e7e34;">Perfeccionismo</strong>
+                                <p style="font-size: 12px; color: #155724; margin-top: 4px;">Desenvolver realismo, aceitar imperfeição e encontrar satisfação em progresso, não perfeição.</p>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevOnboardingStep()">Voltar</button>
+                            <button type="button" class="btn btn-primary" onclick="nextOnboardingStep()">Próximo</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: FIRST SESSION -->
+                    <div id="onboardingStep3" class="onboarding-step" style="display: none;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 15px;">🎤 Vamos Começar?</h2>
+                        <p style="font-size: 13px; color: var(--color-text-light); margin-bottom: 20px;">
+                            Conte-me como você está se sentindo e qual é seu objetivo principal para nossas sessões.
+                        </p>
+                        
+                        <div class="form-group">
+                            <label>Como você está se sentindo agora?</label>
+                            <textarea id="initialFeeling" placeholder="Descreva seu estado emocional, pensamentos e preocupações atuais..." style="min-height: 100px;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Qual é seu objetivo principal?</label>
+                            <select id="sessionGoal">
+                                <option value="">Selecione seu foco principal</option>
+                                <option value="Ansiedade profissional">⚡ Ansiedade Profissional</option>
+                                <option value="Síndrome do impostor">🎭 Síndrome do Impostor</option>
+                                <option value="Burnout">🔥 Lidar com Burnout</option>
+                                <option value="Perfeccionismo">✨ Reduzir Perfeccionismo</option>
+                                <option value="Conversa geral">💬 Conversa Geral</option>
+                            </select>
+                        </div>
+
+                        <div style="background: #e8f4f8; padding: 12px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid var(--color-primary);">
+                            <p style="font-size: 12px; color: var(--color-text); margin: 0;">
+                                ℹ️ Suas respostas são 100% privadas e armazenadas apenas no seu dispositivo. Nenhuma informação é enviada para servidores externos.
+                            </p>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevOnboardingStep()">Voltar</button>
+                            <button type="submit" class="btn btn-primary">Começar Terapia 💚</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="appScreen" style="display: flex; flex-direction: column; width: 100%; height: 100%; flex: 1;">
+        <div id="header" class="header">
+            <div class="header-content">
+                <h1>
+                    <div class="logo">💚</div>
+                    <span>Dra. Helena</span>
+                </h1>
+                <div class="nav-tabs">
+                    <button class="nav-btn active" onclick="switchTab('home')">🏠 Início</button>
+                    <button class="nav-btn" onclick="switchTab('chat')">💬 Sessão</button>
+                    <button class="nav-btn" onclick="switchTab('mood')">😊 Humor</button>
+                    <button class="nav-btn" onclick="switchTab('goals')">🎯 Metas</button>
+                    <button class="nav-btn" onclick="switchTab('journal')">📔 Diário</button>
+                    <button class="nav-btn" onclick="switchTab('progress')">📈 Progresso</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="sidebar" class="sidebar">
+                <h3>Minhas Sessões</h3>
+                <div id="consultationList"></div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="startNewSession()">+ Nova</button>
+            </div>
+
+            <div class="main-content">
+                <!-- HOME -->
+                <div id="home" class="section active">
+                    <div class="panel">
+                        <h2>Bem-vindo de volta, Caio! 👋</h2>
+
+                        <div class="home-card">
+                            <div class="avatar-circle">
+                                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/ec8ebf72-28ac-4f3b-abbf-b170cb1e3610" alt="Caio Diniz Borges" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div class="card-info">
+                                <h3>Caio Diniz Borges <span class="badge">Paciente</span></h3>
+                                <p>Growth & Marketing Professional</p>
+                                <p>📍 Pernambuco, Brasil</p>
+                            </div>
+                        </div>
+
+                        <div class="home-card">
+                            <div class="avatar-circle" style="background: linear-gradient(135deg, #e8b4d4 0%, #f5d5e3 100%);">
+                                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/97922838-1a89-4214-9750-224da718c065.png" alt="Dra. Helena Monteiro" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div class="card-info">
+                                <h3>Dra. Helena Monteiro <span class="badge">✓ Especialista</span></h3>
+                                <p>Psicóloga Clínica</p>
+                                <p style="font-size: 12px; line-height: 1.5; margin-top: 6px;">Especialista em TCC, Teoria do Apego e Terapia do Esquema</p>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;">📊 Seu Progresso</h3>
+                        <div class="progress-grid">
+                            <div class="progress-card">
+                                <div class="progress-label">Sessões</div>
+                                <div class="progress-value" id="homeSessionsCount">0</div>
+                            </div>
+                            <div class="progress-card">
+                                <div class="progress-label">Bem-Estar</div>
+                                <div class="progress-value" id="homeWellbeing">-</div>
+                            </div>
+                            <div class="progress-card">
+                                <div class="progress-label">Metas</div>
+                                <div class="progress-value" id="homeGoals">0</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" style="margin-top: 20px;" onclick="startNewSession()">+ Iniciar Nova Sessão</button>
+                    </div>
+                </div>
+
+                <!-- CHAT -->
+                <div id="chat" class="section">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h2 id="chatTitle">Sessão Terapêutica</h2>
+                            <div class="chat-info" id="chatInfo"></div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">💭</div>
+                                <p>Selecione uma sessão ou comece uma nova</p>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <textarea id="messageInput" placeholder="Conte seus pensamentos..." maxlength="1000"></textarea>
+                            <button class="btn btn-primary" onclick="sendMessage()" style="width: auto; flex-shrink: 0;">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MOOD TRACKER -->
+                <div id="mood" class="section">
+                    <div class="panel">
+                        <h2>😊 Como você está?</h2>
+                        
+                        <label style="display: block; margin-bottom: 15px; font-weight: 600;">Seu humor agora:</label>
+                        <div class="mood-selector">
+                            <button class="mood-btn" onclick="recordMood(1, '😢')">😢</button>
+                            <button class="mood-btn" onclick="recordMood(2, '😞')">😞</button>
+                            <button class="mood-btn" onclick="recordMood(3, '😐')">😐</button>
+                            <button class="mood-btn" onclick="recordMood(4, '🙂')">🙂</button>
+                            <button class="mood-btn" onclick="recordMood(5, '😄')">😄</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label>O que você está sentindo?</label>
+                            <textarea id="moodContext" placeholder="Descreva o seu estado..."></textarea>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="saveMoodEntry()">Registrar</button>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;">📊 Histórico</h3>
+                        <div id="moodHistory"></div>
+                    </div>
+                </div>
+
+                <!-- GOALS -->
+                <div id="goals" class="section">
+                    <div class="panel">
+                        <h2>🎯 Metas Terapêuticas</h2>
+
+                        <div class="form-group">
+                            <label>Nova Meta</label>
+                            <input type="text" id="goalTitle" placeholder="Ex: Reduzir ansiedade em apresentações">
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <textarea id="goalDescription" placeholder="Detalhe sua meta..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Prazo (dias)</label>
+                            <input type="number" id="goalDeadline" min="1" value="30">
+                        </div>
+
+                        <button class="btn btn-primary" onclick="addGoal()">Adicionar</button>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;">Ativas</h3>
+                        <div id="activeGoals"></div>
+
+                        <h3 style="margin-top: 20px; margin-bottom: 15px;">✅ Completadas</h3>
+                        <div id="completedGoals"></div>
+                    </div>
+                </div>
+
+                <!-- JOURNAL -->
+                <div id="journal" class="section">
+                    <div class="panel">
+                        <h2>📔 Diário Pessoal</h2>
+
+                        <div class="form-group">
+                            <label>Tema (opcional)</label>
+                            <input type="text" id="journalTheme" placeholder="Ex: Reflexão do dia...">
+                        </div>
+                        <div class="form-group">
+                            <label>Sua Anotação</label>
+                            <textarea id="journalEntry" placeholder="Escreva livremente..." style="min-height: 120px;"></textarea>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="saveJournalEntry()">Salvar</button>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;">Minhas Entradas</h3>
+                        <div id="journalEntries"></div>
+                    </div>
+                </div>
+
+                <!-- PROGRESS -->
+                <div id="progress" class="section">
+                    <div class="panel">
+                        <h2>📈 Progresso Terapêutico</h2>
+
+                        <div class="progress-grid">
+                            <div class="progress-card">
+                                <div class="progress-label">Sessões</div>
+                                <div class="progress-value" id="progressSessions">0</div>
+                            </div>
+                            <div class="progress-card">
+                                <div class="progress-label">Bem-Estar</div>
+                                <div class="progress-value" id="progressWellbeing">-</div>
+                            </div>
+                            <div class="progress-card">
+                                <div class="progress-label">Metas</div>
+                                <div class="progress-value" id="completedGoalsCount">0</div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;">Evolução por Área</h3>
+                        <div class="chart-container">
+                            <h3>Progresso nos Temas</h3>
+                            <div class="line-chart">
+                                <div class="chart-bar" style="height: 40%;" title="Ansiedade">
+                                    <span class="chart-bar-label">Ansiedade</span>
+                                </div>
+                                <div class="chart-bar" style="height: 35%;" title="Impostor">
+                                    <span class="chart-bar-label">Impostor</span>
+                                </div>
+                                <div class="chart-bar" style="height: 50%;" title="Burnout">
+                                    <span class="chart-bar-label">Burnout</span>
+                                </div>
+                                <div class="chart-bar" style="height: 45%;" title="Perfeição">
+                                    <span class="chart-bar-label">Perfeição</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 25px; margin-bottom: 15px;">Histórico</h3>
+                        <div id="progressTimeline" class="timeline"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:application/javascript,' + encodeURIComponent(`
+                self.addEventListener('install', event => self.skipWaiting());
+                self.addEventListener('activate', event => event.waitUntil(clients.claim()));
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request).then(response => response || fetch(event.request)).catch(() => new Response('Offline'))
+                    );
+                });
+            `));
+        }
+
+        const appState = {
+            patientName: "Caio Diniz Borges",
+            sessions: [],
+            currentSessionId: null,
+            moodEntries: [],
+            goals: [],
+            journalEntries: [],
+            onboardingCompleted: false
+        };
+
+        const PERPLEXITY_API_KEY = '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';
+
+        function init() {
+            loadAppState();
+            if (appState.onboardingCompleted) {
+                showMainApp();
+            }
+        }
+
+        function saveAppState() {
+            localStorage.setItem('caioTherapyState', JSON.stringify(appState));
+        }
+
+        function loadAppState() {
+            const saved = localStorage.getItem('caioTherapyState');
+            if (saved) {
+                Object.assign(appState, JSON.parse(saved));
+            }
+        }
+
+        let currentOnboardingStep = 0;
+
+        function nextOnboardingStep() {
+            currentOnboardingStep++;
+            updateOnboardingSteps();
+        }
+
+        function prevOnboardingStep() {
+            currentOnboardingStep--;
+            updateOnboardingSteps();
+        }
+
+        function updateOnboardingSteps() {
+            for (let i = 0; i < 4; i++) {
+                const step = document.getElementById(`onboardingStep${i}`);
+                const dot = document.getElementById(`step${i}`);
+                if (step) step.style.display = i === currentOnboardingStep ? 'block' : 'none';
+                if (dot) dot.classList.toggle('active', i === currentOnboardingStep);
+            }
+        }
+
+        function completeOnboarding(e) {
+            e.preventDefault();
+            const feeling = document.getElementById('initialFeeling').value;
+            const goal = document.getElementById('sessionGoal').value;
+
+            if (!feeling || !goal) {
+                alert('Por favor, preencha todos os campos');
+                return;
+            }
+
+            appState.onboardingCompleted = true;
+            saveAppState();
+            showMainApp();
+
+            const session = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                topic: goal,
+                messages: [{
+                    sender: 'patient',
+                    text: feeling,
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            appState.sessions.push(session);
+            appState.currentSessionId = session.id;
+            saveAppState();
+            updateConsultationList();
+            loadChatMessages();
+            updateChatInfo();
+            switchTab('chat');
+
+            setTimeout(() => {
+                addTherapistResponse(session);
+            }, 800);
+
+            showNotification('✓ Primeira sessão iniciada!', 'success');
+        }
+
+        function showMainApp() {
+            document.getElementById('onboardingScreen').style.display = 'none';
+            document.getElementById('appScreen').style.display = 'flex';
+            document.getElementById('header').classList.add('show');
+            document.getElementById('sidebar').classList.add('show');
+            updateConsultationList();
+            updateDashboards();
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) event.target.classList.add('active');
+
+            if (tab === 'mood') updateMoodHistory();
+            if (tab === 'goals') updateGoalsDisplay();
+            if (tab === 'journal') updateJournalDisplay();
+            if (tab === 'progress') updateProgressDashboard();
+            if (tab === 'home') updateDashboards();
+        }
+
+        function updateConsultationList() {
+            const list = document.getElementById('consultationList');
+            const sorted = [...appState.sessions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            list.innerHTML = sorted.map(s => `
+                <div class="consultation-item ${appState.currentSessionId === s.id ? 'active' : ''}" 
+                     onclick="selectSession(${s.id})">
+                    <div class="consultation-date">${formatDate(s.date)}</div>
+                    <div class="consultation-status">${s.topic}</div>
+                </div>
+            `).join('');
+
+            if (appState.sessions.length === 0) {
+                list.innerHTML = '<div style="padding: 15px; text-align: center; color: var(--color-text-light); font-size: 12px;">Nenhuma sessão</div>';
+            }
+        }
+
+        function selectSession(id) {
+            appState.currentSessionId = id;
+            updateConsultationList();
+            loadChatMessages();
+            updateChatInfo();
+        }
+
+        function startNewSession() {
+            const topic = prompt('Tema da sessão:', 'Conversa geral');
+            if (!topic) return;
+
+            const session = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                topic: topic,
+                messages: []
+            };
+
+            appState.sessions.push(session);
+            appState.currentSessionId = session.id;
+            saveAppState();
+            updateConsultationList();
+            loadChatMessages();
+            updateChatInfo();
+            switchTab('chat');
+            showNotification('✓ Nova sessão!', 'success');
+        }
+
+        function loadChatMessages() {
+            const chat = document.getElementById('chatMessages');
+            
+            if (!appState.currentSessionId) {
+                chat.innerHTML = `<div class="empty-state"><div class="empty-state-icon">💭</div><p>Selecione uma sessão</p></div>`;
+                return;
+            }
+
+            const session = appState.sessions.find(s => s.id === appState.currentSessionId);
+            if (!session) return;
+
+            if (!session.messages || session.messages.length === 0) {
+                chat.innerHTML = `<div style="padding: 15px;"><div class="alert alert-info">Olá! Como posso ajudá-lo hoje?</div></div>`;
+                return;
+            }
+
+            chat.innerHTML = session.messages.map(msg => `
+                <div class="message ${msg.sender === 'patient' ? 'patient' : 'therapist'}">
+                    <div><div class="message-bubble">${escapeHtml(msg.text)}</div><div class="message-time">${formatTime(msg.timestamp)}</div></div>
+                </div>
+            `).join('');
+
+            setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 100);
+        }
+
+        function updateChatInfo() {
+            const info = document.getElementById('chatInfo');
+            if (!appState.currentSessionId) {
+                info.innerHTML = '';
+                return;
+            }
+
+            const session = appState.sessions.find(s => s.id === appState.currentSessionId);
+            if (session) {
+                info.innerHTML = `${formatDate(session.date)} • ${session.topic} • ${session.messages?.length || 0} mensagens`;
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+
+            if (!appState.currentSessionId) {
+                alert('Selecione uma sessão');
+                return;
+            }
+
+            if (!text) return;
+
+            const session = appState.sessions.find(s => s.id === appState.currentSessionId);
+            if (!session) return;
+
+            if (!session.messages) session.messages = [];
+
+            session.messages.push({
+                sender: 'patient',
+                text: text,
+                timestamp: new Date().toISOString()
+            });
+
+            input.value = '';
+            loadChatMessages();
+            saveAppState();
+            addTherapistResponse(session);
+        }
+
+        async function addTherapistResponse(session) {
+            const lastMessage = session.messages[session.messages.length - 1];
+            
+            showTypingIndicator();
+
+            try {
+                const response = await fetch('https://api.perplexity.ai/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${PERPLEXITY_API_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'llama-3.1-sonar-small-128k-online',
+                        messages: [
+                            { 
+                                role: 'system', 
+                                content: `Você é Dra. Helena Monteiro, psicóloga especialista em TCC, Apego e Esquema. Atende Caio Diniz Borges, profissional de Growth & Marketing de Pernambuco. Foque em: ansiedade profissional, síndrome do impostor, burnout, perfeccionismo. Seja empático, use TCC. Máximo 3 parágrafos, 300 palavras.`
+                            },
+                            { role: 'user', content: lastMessage.text }
+                        ],
+                        max_tokens: 300,
+                        temperature: 0.7,
+                    })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                const therapistMessage = data.choices[0].message.content;
+
+                session.messages.push({
+                    sender: 'therapist',
+                    text: therapistMessage,
+                    timestamp: new Date().toISOString()
+                });
+
+                loadChatMessages();
+                saveAppState();
+                hideTypingIndicator();
+
+            } catch (error) {
+                console.error('Erro:', error);
+                session.messages.push({
+                    sender: 'therapist',
+                    text: 'Desculpe, tive um pequeno problema. Você poderia repetir?',
+                    timestamp: new Date().toISOString()
+                });
+                loadChatMessages();
+                saveAppState();
+                hideTypingIndicator();
+            }
+        }
+
+        function showTypingIndicator() {
+            const chat = document.getElementById('chatMessages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typingIndicator';
+            indicator.className = 'message therapist';
+            indicator.innerHTML = `<div><div class="message-bubble">Digitando...</div></div>`;
+            chat.appendChild(indicator);
+            setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 50);
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        function recordMood(level, emoji) {
+            const context = document.getElementById('moodContext').value;
+            const entry = {
+                id: Date.now(),
+                level: level,
+                emoji: emoji,
+                context: context,
+                date: new Date().toISOString()
+            };
+
+            appState.moodEntries.push(entry);
+            saveAppState();
+            updateMoodHistory();
+            document.getElementById('moodContext').value = '';
+            showNotification('😊 Registrado!', 'success');
+            
+            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.closest('.mood-btn')?.classList.add('selected');
+        }
+
+        function saveMoodEntry() {
+            const buttons = document.querySelectorAll('.mood-btn.selected');
+            if (buttons.length === 0) {
+                alert('Selecione seu humor');
+                return;
+            }
+        }
+
+        function updateMoodHistory() {
+            const history = document.getElementById('moodHistory');
+            if (!history) return;
+
+            const last7 = appState.moodEntries.slice(-7);
+            
+            if (last7.length === 0) {
+                history.innerHTML = '<p style="color: var(--color-text-light); font-size: 13px;">Nenhum registro</p>';
+                return;
+            }
+
+            history.innerHTML = last7.map(entry => `
+                <div style="display: flex; gap: 10px; padding: 10px; background: var(--color-primary-light); border-radius: 6px; margin-bottom: 8px; align-items: center;">
+                    <span style="font-size: 24px;">${entry.emoji}</span>
+                    <div style="flex: 1; font-size: 12px;">
+                        <div style="font-weight: 600; color: var(--color-primary);">${formatDate(entry.date)}</div>
+                        ${entry.context ? `<div style="color: var(--color-text-light);">${entry.context}</div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addGoal() {
+            const title = document.getElementById('goalTitle').value;
+            const description = document.getElementById('goalDescription').value;
+            const deadline = document.getElementById('goalDeadline').value;
+
+            if (!title || !description) {
+                alert('Preencha os campos');
+                return;
+            }
+
+            const goal = {
+                id: Date.now(),
+                title: title,
+                description: description,
+                deadline: parseInt(deadline),
+                createdAt: new Date().toISOString(),
+                completedAt: null,
+                progress: 0
+            };
+
+            appState.goals.push(goal);
+            saveAppState();
+            updateGoalsDisplay();
+
+            document.getElementById('goalTitle').value = '';
+            document.getElementById('goalDescription').value = '';
+            showNotification('🎯 Meta criada!', 'success');
+        }
+
+        function completeGoal(goalId) {
+            const goal = appState.goals.find(g => g.id === goalId);
+            if (goal) {
+                goal.completedAt = new Date().toISOString();
+                saveAppState();
+                updateGoalsDisplay();
+                showNotification('🏆 Parabéns!', 'success');
+            }
+        }
+
+        function updateGoalsDisplay() {
+            const active = document.getElementById('activeGoals');
+            const completed = document.getElementById('completedGoals');
+
+            if (!active || !completed) return;
+
+            const activeGoals = appState.goals.filter(g => !g.completedAt);
+            const completedGoals = appState.goals.filter(g => g.completedAt);
+
+            active.innerHTML = activeGoals.length === 0 
+                ? '<p style="color: var(--color-text-light); font-size: 13px;">Nenhuma</p>'
+                : activeGoals.map(goal => `
+                    <div class="goal-card">
+                        <div class="goal-title">${goal.title}</div>
+                        <div style="font-size: 12px; color: var(--color-text); margin-bottom: 10px;">${goal.description}</div>
+                        <div class="goal-progress"><div class="goal-progress-bar" style="width: ${goal.progress}%"></div></div>
+                        <div style="font-size: 11px; color: var(--color-text-light); margin-bottom: 10px;">${goal.progress}% • ${goal.deadline} dias</div>
+                        <button class="btn btn-primary" style="width: 100%; padding: 8px;" onclick="completeGoal(${goal.id})">Completar</button>
+                    </div>
+                `).join('');
+
+            completed.innerHTML = completedGoals.length === 0
+                ? '<p style="color: var(--color-text-light); font-size: 13px;">Nenhuma</p>'
+                : completedGoals.map(goal => `
+                    <div class="goal-card" style="opacity: 0.7;">
+                        <div class="goal-title">✓ ${goal.title}</div>
+                        <div style="font-size: 11px; color: var(--color-text-light);">Completada em ${formatDate(goal.completedAt)}</div>
+                    </div>
+                `).join('');
+        }
+
+        function saveJournalEntry() {
+            const theme = document.getElementById('journalTheme').value;
+            const content = document.getElementById('journalEntry').value;
+
+            if (!content) {
+                alert('Escreva algo');
+                return;
+            }
+
+            const entry = {
+                id: Date.now(),
+                theme: theme || 'Reflexão Pessoal',
+                content: content,
+                createdAt: new Date().toISOString()
+            };
+
+            appState.journalEntries.push(entry);
+            saveAppState();
+            updateJournalDisplay();
+
+            document.getElementById('journalTheme').value = '';
+            document.getElementById('journalEntry').value = '';
+            showNotification('📔 Salvo!', 'success');
+        }
+
+        function deleteJournalEntry(entryId) {
+            if (confirm('Deletar?')) {
+                appState.journalEntries = appState.journalEntries.filter(e => e.id !== entryId);
+                saveAppState();
+                updateJournalDisplay();
+            }
+        }
+
+        function updateJournalDisplay() {
+            const entries = document.getElementById('journalEntries');
+            if (!entries) return;
+
+            if (appState.journalEntries.length === 0) {
+                entries.innerHTML = '<p style="color: var(--color-text-light); font-size: 13px;">Nenhuma entrada</p>';
+                return;
+            }
+
+            entries.innerHTML = appState.journalEntries.map(entry => `
+                <div class="journal-entry">
+                    <div class="journal-date">${formatDate(entry.createdAt)} • ${entry.theme}</div>
+                    <div class="journal-preview">${entry.content.substring(0, 80)}...</div>
+                    <button class="btn btn-secondary" style="margin-top: 8px; width: 100%; padding: 6px;" onclick="deleteJournalEntry(${entry.id})">Deletar</button>
+                </div>
+            `).join('');
+        }
+
+        function updateProgressDashboard() {
+            const sessionsCount = appState.sessions.length;
+            const moodAverage = appState.moodEntries.length > 0 
+                ? Math.round(appState.moodEntries.reduce((sum, m) => sum + m.level, 0) / appState.moodEntries.length) 
+                : '-';
+            const completedGoals = appState.goals.filter(g => g.completedAt).length;
+
+            document.getElementById('progressSessions').textContent = sessionsCount;
+            document.getElementById('progressWellbeing').textContent = moodAverage;
+            document.getElementById('completedGoalsCount').textContent = completedGoals;
+
+            const timeline = document.getElementById('progressTimeline');
+            if (timeline) {
+                timeline.innerHTML = appState.sessions.slice(-5).reverse().map(s => `
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <strong>${formatDate(s.date)}</strong><br>
+                            ${s.topic} • ${s.messages?.length || 0} mensagens
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateDashboards() {
+            const sessionsCount = appState.sessions.length;
+            const moodAverage = appState.moodEntries.length > 0 
+                ? Math.round(appState.moodEntries.reduce((sum, m) => sum + m.level, 0) / appState.moodEntries.length) 
+                : '-';
+            const activeGoals = appState.goals.filter(g => !g.completedAt).length;
+
+            document.getElementById('homeSessionsCount').textContent = sessionsCount;
+            document.getElementById('homeWellbeing').textContent = moodAverage;
+            document.getElementById('homeGoals').textContent = activeGoals;
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;', '<': '&lt;', '>': '&gt;',
+                '"': '&quot;', "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('pt-BR');
+        }
+
+        function formatTime(timestamp) {
+            return new Date(timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
